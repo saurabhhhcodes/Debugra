@@ -298,3 +298,4 @@ Python, JavaScript, TypeScript, Java, C++, C, C#, Go, Rust, Ruby, PHP, Swift, Pe
 ## Team
 
 Built for **Coders** — Debugra Team
+# TODO: fix: add empty state for search results panel (#837)
