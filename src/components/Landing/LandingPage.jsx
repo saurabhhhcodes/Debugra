@@ -987,7 +987,13 @@ export default function LandingPage() {
               toast.success('Thank you for your feedback!');
             }}
           >
-            <input type="text" placeholder="Your Name" aria-label="Your Name" className="modal-input" required />
+            <input
+              type="text"
+              placeholder="Your Name"
+              aria-label="Your Name"
+              className="modal-input"
+              required
+            />
 
             <select className="modal-input" aria-label="Select Rating" required>
               <option value="">Select Rating</option>
@@ -1083,7 +1089,11 @@ export default function LandingPage() {
         <div className="modal-backdrop" onClick={() => setShowLogin(false)}>
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
             {/* CLOSE BUTTON - ADD HERE */}
-            <button className="modal-close-btn" aria-label="Close dialog" onClick={() => setShowLogin(false)}>
+            <button
+              className="modal-close-btn"
+              aria-label="Close dialog"
+              onClick={() => setShowLogin(false)}
+            >
               ✕
             </button>
 

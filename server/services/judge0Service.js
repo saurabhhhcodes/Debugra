@@ -4,24 +4,24 @@ const WANDBOX_API = 'https://wandbox.org/api/compile.json';
 
 // Mapping frontend IDs to Wandbox compiler names
 const WANDBOX_COMPILERS = {
-  71: 'cpython-3.13.8',      // Python
-  63: 'nodejs-20.17.0',     // JavaScript
-  80: 'typescript-5.6.2',   // TypeScript
-  62: 'openjdk-jdk-21+35',  // Java
-  54: 'gcc-13.2.0',         // C++
-  55: 'gcc-13.2.0-c',       // C
-  60: 'go-1.23.2',          // Go
-  73: 'rust-1.82.0',        // Rust
+  71: 'cpython-3.13.8', // Python
+  63: 'nodejs-20.17.0', // JavaScript
+  80: 'typescript-5.6.2', // TypeScript
+  62: 'openjdk-jdk-21+35', // Java
+  54: 'gcc-13.2.0', // C++
+  55: 'gcc-13.2.0-c', // C
+  60: 'go-1.23.2', // Go
+  73: 'rust-1.82.0', // Rust
   56: 'dotnetcore-8.0.402', // C#
-  72: 'ruby-3.4.9',         // Ruby
-  68: 'php-8.3.12',         // PHP
-  64: 'lua-5.4.7',          // Lua
-  81: 'scala-3.5.1',        // Scala
-  61: 'ghc-9.10.1',         // Haskell
-  82: 'sqlite-3.46.1',      // SQLite
-  46: 'bash',               // Bash
-  83: 'swift-6.0.1',        // Swift
-  85: 'perl-5.40.0',        // Perl
+  72: 'ruby-3.4.9', // Ruby
+  68: 'php-8.3.12', // PHP
+  64: 'lua-5.4.7', // Lua
+  81: 'scala-3.5.1', // Scala
+  61: 'ghc-9.10.1', // Haskell
+  82: 'sqlite-3.46.1', // SQLite
+  46: 'bash', // Bash
+  83: 'swift-6.0.1', // Swift
+  85: 'perl-5.40.0', // Perl
 };
 
 // Extra compiler flags per language
@@ -35,12 +35,14 @@ const MAX_OUTPUT_LENGTH = 100000;
 async function executeCode(sourceCode, languageId, stdin = '') {
   const compiler = WANDBOX_COMPILERS[languageId];
   if (!compiler) {
-    throw new Error(`Language ID ${languageId} is not supported. Try C++, Python, Java, or JavaScript.`);
+    throw new Error(
+      `Language ID ${languageId} is not supported. Try C++, Python, Java, or JavaScript.`
+    );
   }
 
   try {
     let finalSourceCode = sourceCode;
-    
+
     // SQLite: Format output beautifully and separate multiple result sets
     if (compiler === 'sqlite-3.46.1') {
       if (!finalSourceCode.includes('.mode')) {
@@ -80,8 +82,8 @@ async function executeCode(sourceCode, languageId, stdin = '') {
 
     // Merge compile errors into stderr so the frontend Errors tab shows them
     const stderrOutput = hasCompileError
-      ? (compileError + (runtimeError ? '\n' + runtimeError : ''))
-      : (runtimeError || null);
+      ? compileError + (runtimeError ? '\n' + runtimeError : '')
+      : runtimeError || null;
 
     return {
       stdout: stdout || null,
@@ -99,4 +101,3 @@ async function executeCode(sourceCode, languageId, stdin = '') {
 const SUPPORTED_LANGUAGE_IDS = new Set(Object.keys(WANDBOX_COMPILERS).map(Number));
 
 module.exports = { executeCode, SUPPORTED_LANGUAGE_IDS };
-
