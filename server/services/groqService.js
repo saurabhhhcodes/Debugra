@@ -23,29 +23,30 @@ async function chatCompletion(systemPrompt, userPrompt, apiKey = '', model = DEF
       { role: 'user', content: userPrompt },
     ],
     temperature: 0.2,
-    max_tokens: 2000,response_format: { type: 'json_object' },
+    max_tokens: 2000,
+    response_format: { type: 'json_object' },
   });
 
   const rawContent = response.choices[0].message.content;
   const tokenUsage = response.usage;
-  console.log("Metadata caught: ", tokenUsage);
+  console.log('Metadata caught: ', tokenUsage);
 
   let aiMessage;
   try {
     aiMessage = JSON.parse(rawContent);
   } catch (error) {
-    console.error("Failed to parse LLM response directly as JSON:", error);
-    
+    console.error('Failed to parse LLM response directly as JSON:', error);
+
     // Try to extract JSON from markdown code fences
     const markdownMatch = rawContent.match(/```(?:json)?\n([\s\S]*?)```/);
     if (markdownMatch) {
       try {
         aiMessage = JSON.parse(markdownMatch[1].trim());
       } catch (nestedError) {
-        console.error("Failed to parse extracted JSON from markdown blocks:", nestedError);
+        console.error('Failed to parse extracted JSON from markdown blocks:', nestedError);
       }
     }
-    
+
     // If still undefined, try to extract first '{' to last '}'
     if (!aiMessage) {
       const startIdx = rawContent.indexOf('{');
@@ -54,7 +55,7 @@ async function chatCompletion(systemPrompt, userPrompt, apiKey = '', model = DEF
         try {
           aiMessage = JSON.parse(rawContent.substring(startIdx, endIdx + 1));
         } catch (nestedError2) {
-          console.error("Failed to parse extracted JSON substring:", nestedError2);
+          console.error('Failed to parse extracted JSON substring:', nestedError2);
         }
       }
     }
@@ -66,39 +67,39 @@ async function chatCompletion(systemPrompt, userPrompt, apiKey = '', model = DEF
         explanation: rawContent,
         fix: 'Please retry the request.',
         bestPractice: 'Ensure the API is returning clean JSON.',
-        
+
         steps: ['Failed to trace code execution step-by-step', rawContent],
         timeComplexity: 'N/A',
         spaceComplexity: 'N/A',
         summary: 'Failed to analyze code: raw response returned',
-        
+
         testCases: [],
-        
+
         riskScore: 0,
         findings: [],
         remediationSteps: [],
-        
+
         title: 'AI Explanation',
         concepts: [],
         tip: '',
-        
+
         answer: rawContent,
         codeExample: '',
-        
+
         functionName: 'Unknown',
         timeComplexity: {
           best: 'N/A',
           average: 'N/A',
           worst: 'N/A',
-          explanation: rawContent
+          explanation: rawContent,
         },
         spaceComplexity: {
           value: 'N/A',
-          explanation: rawContent
+          explanation: rawContent,
         },
         breakdown: [],
         overallRating: 'N/A',
-        tips: []
+        tips: [],
       };
     }
   }
@@ -120,13 +121,10 @@ async function chatCompletionText(systemPrompt, userPrompt, apiKey = '', model =
   const aiMessage = response.choices[0].message.content;
   const tokenUsage = response.usage;
 
-  console.log("Metadata caught (Text): ", tokenUsage);
+  console.log('Metadata caught (Text): ', tokenUsage);
 
   return { content: aiMessage, usage: tokenUsage };
 }
-
-
-
 
 // 1. Error Explanation
 async function explainError(code, error, language, apiKey = '', model = DEFAULT_MODEL) {
@@ -199,7 +197,7 @@ ${error || 'No specific error, but optimize and fix any issues.'}
 }
 
 // 3. Logic Explanation
-async function explainLogicAI(code, language, apiKey = '',model = DEFAULT_MODEL) {
+async function explainLogicAI(code, language, apiKey = '', model = DEFAULT_MODEL) {
   return chatCompletion(
     `You are a CS tutor. Explain code step-by-step. Always respond in valid JSON.`,
     `Explain this <language>${language}</language> code step-by-step:
@@ -221,7 +219,7 @@ Respond in JSON:
 }
 
 // 4. Test Case Generation
-async function generateTestsAI(code, language, apiKey = '',model = DEFAULT_MODEL) {
+async function generateTestsAI(code, language, apiKey = '', model = DEFAULT_MODEL) {
   return chatCompletion(
     `You are a QA engineer. Generate test cases. Always respond in valid JSON.`,
     `Generate test cases for this <language>${language}</language> function:
@@ -245,7 +243,7 @@ Respond in JSON:
 }
 
 // 5. Security and refactoring audit
-async function auditCodeAI(code, language, apiKey = '',model = DEFAULT_MODEL) {
+async function auditCodeAI(code, language, apiKey = '', model = DEFAULT_MODEL) {
   return chatCompletion(
     `You are a senior application security reviewer and refactoring coach. Audit code for exploitable security risks, reliability hazards, memory/resource leaks, and unsafe architecture. Always respond in valid JSON.`,
     `Audit this <language>${language}</language> code:
@@ -283,7 +281,7 @@ Rules:
 }
 
 // 6. Execution Visualization
-async function visualizeAI(code, language, input = '', apiKey = '',model = DEFAULT_MODEL) {
+async function visualizeAI(code, language, input = '', apiKey = '', model = DEFAULT_MODEL) {
   return chatCompletion(
     `You are a code tracer. Trace through code step by step showing variable states. Always respond in valid JSON.`,
     `Trace through this <language>${language}</language> code step by step. Show variable states after each line.
@@ -292,9 +290,13 @@ async function visualizeAI(code, language, input = '', apiKey = '',model = DEFAU
 ${code}
 </code>
 
-${input ? `<input>
+${
+  input
+    ? `<input>
 ${input}
-</input>` : ''}
+</input>`
+    : ''
+}
 
 Respond in JSON:
 {
@@ -309,7 +311,7 @@ Respond in JSON:
 }
 
 // 7. AI Code Explainer — explains a selected code snippet in plain language
-async function explainCodeSnippetAI(code, language, apiKey = '',model = DEFAULT_MODEL) {
+async function explainCodeSnippetAI(code, language, apiKey = '', model = DEFAULT_MODEL) {
   return chatCompletion(
     `You are an expert programming tutor. When a user highlights a snippet of code, explain what it does in simple, beginner-friendly language. Always respond in valid JSON.`,
     `Explain this <language>${language}</language> code snippet in simple terms:
@@ -331,7 +333,14 @@ Respond in this EXACT JSON format:
 }
 
 // 8. AI Code Explainer — follow-up Q&A on previously explained code
-async function askFollowUpAI(code, language, question, previousExplanation, apiKey = '',model = DEFAULT_MODEL) {
+async function askFollowUpAI(
+  code,
+  language,
+  question,
+  previousExplanation,
+  apiKey = '',
+  model = DEFAULT_MODEL
+) {
   return chatCompletion(
     `You are an expert programming tutor engaged in an interactive Q&A session. The user previously highlighted code and received an explanation. Now they have a follow-up question. Answer clearly and concisely. Always respond in valid JSON.`,
     `The user is asking about this <language>${language}</language> code:
@@ -407,22 +416,3 @@ module.exports = {
   askFollowUpAI,
   analyzeComplexityAI,
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

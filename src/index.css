@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* ============ VS CODE DARK TOKENS (from ParshuPath) ============ */
 :root {
@@ -6113,7 +6113,9 @@ details[open] .debug-stderr-summary::before {
 [data-theme='light'] .contributor-card-pro {
   background: #ffffff;
   border-color: rgba(0, 0, 0, 0.08);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
 
 [data-theme='light'] .contributor-card-pro:hover {
@@ -6177,5 +6179,3 @@ details[open] .debug-stderr-summary::before {
   width: auto !important;
   max-width: none !important;
 }
-
-
