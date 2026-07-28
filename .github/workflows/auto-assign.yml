@@ -17,7 +17,7 @@ jobs:
         with:
           script: |
             const commentBody = context.payload.comment.body.trim().toLowerCase();
-            
+
             // List of trigger phrases/keywords
             const triggerKeywords = [
               'take',
@@ -28,7 +28,7 @@ jobs:
               'i want to work on this',
               'i would like to work on this'
             ];
-            
+
             // Check if comment matches any trigger keyword or starts with one
             const isTrigger = triggerKeywords.some(keyword => {
               return commentBody === keyword || commentBody.startsWith(keyword + ' ') || commentBody.startsWith(keyword + '\n');
@@ -40,7 +40,7 @@ jobs:
             }
 
             const issue = context.payload.issue;
-            
+
             // Skip pull requests
             if (issue.pull_request) {
               console.log("This comment is on a pull request, skipping auto-assign.");

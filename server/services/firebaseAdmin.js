@@ -66,7 +66,11 @@ function init() {
     }
     db = admin.firestore();
     isConfigured = true;
-    const mode = serviceAccount ? 'service account' : usingEmulator ? 'emulator' : 'application default credentials';
+    const mode = serviceAccount
+      ? 'service account'
+      : usingEmulator
+        ? 'emulator'
+        : 'application default credentials';
     logger.info(`[firebaseAdmin] Initialized (${mode}).`);
   } catch (err) {
     isConfigured = false;

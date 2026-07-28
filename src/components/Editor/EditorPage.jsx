@@ -566,7 +566,7 @@ export default function EditorPage({ user }) {
     if (!str) return '';
     return str
       .replace(/\\/g, '\\\\')
-      .replace(/'/g, "\\'") 
+      .replace(/'/g, "\\'")
       .replace(/"/g, '\\"')
       .replace(/\n/g, '\\A ')
       .replace(/\r/g, '')

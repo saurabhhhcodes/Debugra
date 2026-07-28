@@ -10,18 +10,18 @@ We welcome all kinds of contributions — from bug fixes and documentation impro
 
 # 📋 Table of Contents
 
-* [🌟 Ways to Contribute](#-ways-to-contribute)
-* [🚀 Getting Started](#-getting-started)
-* [⚙️ Local Development Setup](#️-local-development-setup)
-* [📁 Project Structure](#-project-structure)
-* [🧩 Architecture Overview](#-architecture-overview)
-* [🔄 Contribution Workflow](#-contribution-workflow)
-* [📝 Pull Request Guidelines](#-pull-request-guidelines)
-* [🐛 Bug Reports & Issues](#-bug-reports--issues)
-* [🎨 Code Style Guidelines](#-code-style-guidelines)
-* [🛠 Troubleshooting](#-troubleshooting)
-* [📞 Getting Help](#-getting-help)
-* [📜 Code of Conduct](#-code-of-conduct)
+- [🌟 Ways to Contribute](#-ways-to-contribute)
+- [🚀 Getting Started](#-getting-started)
+- [⚙️ Local Development Setup](#️-local-development-setup)
+- [📁 Project Structure](#-project-structure)
+- [🧩 Architecture Overview](#-architecture-overview)
+- [🔄 Contribution Workflow](#-contribution-workflow)
+- [📝 Pull Request Guidelines](#-pull-request-guidelines)
+- [🐛 Bug Reports & Issues](#-bug-reports--issues)
+- [🎨 Code Style Guidelines](#-code-style-guidelines)
+- [🛠 Troubleshooting](#-troubleshooting)
+- [📞 Getting Help](#-getting-help)
+- [📜 Code of Conduct](#-code-of-conduct)
 
 ---
 
@@ -29,31 +29,31 @@ We welcome all kinds of contributions — from bug fixes and documentation impro
 
 ## A. Feature Development
 
-* Add editor features
-* Improve collaboration tools
-* Enhance AI functionality
-* Improve accessibility
+- Add editor features
+- Improve collaboration tools
+- Enhance AI functionality
+- Improve accessibility
 
 ## B. Bug Fixes
 
-* Resolve frontend/backend bugs
-* Fix responsive UI issues
-* Improve performance
-* Handle edge cases
+- Resolve frontend/backend bugs
+- Fix responsive UI issues
+- Improve performance
+- Handle edge cases
 
 ## C. Documentation
 
-* Improve README
-* Enhance setup guides
-* Add troubleshooting docs
-* Improve contributor onboarding
+- Improve README
+- Enhance setup guides
+- Add troubleshooting docs
+- Improve contributor onboarding
 
 ## D. UI/UX Improvements
 
-* Improve mobile responsiveness
-* Enhance UI interactions
-* Improve accessibility
-* Add smooth animations/transitions
+- Improve mobile responsiveness
+- Enhance UI interactions
+- Improve accessibility
+- Add smooth animations/transitions
 
 ---
 
@@ -115,11 +115,11 @@ git checkout -b docs/improve-contributing-guide
 
 Make sure you have installed:
 
-* Node.js v18+
-* Git
-* VS Code (Recommended)
-* Firebase Account
-* Groq API Key
+- Node.js v18+
+- Git
+- VS Code (Recommended)
+- Firebase Account
+- Groq API Key
 
 ---
 
@@ -184,9 +184,8 @@ GROQ_API_KEY=your_groq_api_key
 2. Create a Firebase Project
 3. Go to Authentication
 4. Enable:
-
-   * Google Authentication
-   * Email/Password Authentication
+   - Google Authentication
+   - Email/Password Authentication
 
 ---
 
@@ -305,10 +304,10 @@ git merge upstream/main
 
 ## 2. Make Your Changes
 
-* Follow the project structure
-* Keep code clean and readable
-* Avoid unrelated changes
-* Follow existing design patterns
+- Follow the project structure
+- Keep code clean and readable
+- Avoid unrelated changes
+- Follow existing design patterns
 
 ---
 
@@ -316,10 +315,10 @@ git merge upstream/main
 
 Before submitting:
 
-* Test frontend functionality
-* Test backend APIs
-* Check responsiveness
-* Ensure no console errors
+- Test frontend functionality
+- Test backend APIs
+- Check responsiveness
+- Ensure no console errors
 
 ---
 
@@ -374,11 +373,11 @@ Closes #500
 
 Before submitting your PR:
 
-* [ ] Code works properly
-* [ ] No merge conflicts
-* [ ] Documentation updated if needed
-* [ ] UI changes include screenshots
-* [ ] PR focuses on one issue only
+- [ ] Code works properly
+- [ ] No merge conflicts
+- [ ] Documentation updated if needed
+- [ ] UI changes include screenshots
+- [ ] PR focuses on one issue only
 
 ---
 
@@ -398,9 +397,9 @@ docs: improve local setup guide
 
 ## Before Creating an Issue
 
-* Search existing issues first
-* Verify the bug still exists
-* Check the latest branch/version
+- Search existing issues first
+- Verify the bug still exists
+- Check the latest branch/version
 
 ---
 
@@ -408,20 +407,25 @@ docs: improve local setup guide
 
 ```md
 ## Bug Description
+
 Explain the issue clearly
 
 ## Steps To Reproduce
+
 1. Go to ...
 2. Click ...
 3. Observe ...
 
 ## Expected Behavior
+
 What should happen
 
 ## Screenshots
+
 Add screenshots if applicable
 
 ## Environment
+
 - Browser:
 - OS:
 - Device:
@@ -433,20 +437,20 @@ Add screenshots if applicable
 
 ## React & JavaScript
 
-* Use functional components
-* Use `const` and `let`
-* Avoid unnecessary re-renders
-* Keep components modular
-* Use meaningful naming
+- Use functional components
+- Use `const` and `let`
+- Avoid unnecessary re-renders
+- Keep components modular
+- Use meaningful naming
 
 ---
 
 ## CSS
 
-* Keep styling responsive
-* Use consistent spacing
-* Follow existing design system
-* Avoid unnecessary inline styles
+- Keep styling responsive
+- Use consistent spacing
+- Follow existing design system
+- Avoid unnecessary inline styles
 
 ---
 
@@ -491,9 +495,9 @@ npx kill-port 3001
 
 Check:
 
-* Firebase config values
-* Firestore enabled
-* Authentication enabled
+- Firebase config values
+- Firestore enabled
+- Authentication enabled
 
 ---
 
@@ -501,9 +505,9 @@ Check:
 
 Make sure:
 
-* Backend server is running
-* `VITE_API_URL` is correct
-* Port `3001` is available
+- Backend server is running
+- `VITE_API_URL` is correct
+- Port `3001` is available
 
 ---
 
@@ -521,9 +525,9 @@ npm install
 
 If you need help:
 
-* Ask in issue comments
-* Reach out to maintainers
-* Request clarification politely
+- Ask in issue comments
+- Reach out to maintainers
+- Request clarification politely
 
 We are happy to help beginner contributors ✦
 

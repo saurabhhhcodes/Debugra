@@ -36,12 +36,7 @@ function verifyWebhookSignature(req, res, next) {
 
   // Compute expected signature from raw body
   const rawBody = JSON.stringify(req.body);
-  const expectedSig =
-    'sha256=' +
-    crypto
-      .createHmac('sha256', secret)
-      .update(rawBody)
-      .digest('hex');
+  const expectedSig = 'sha256=' + crypto.createHmac('sha256', secret).update(rawBody).digest('hex');
 
   // Constant-time comparison to prevent timing attacks
   const sigBuffer = Buffer.from(incomingSignature, 'utf8');
