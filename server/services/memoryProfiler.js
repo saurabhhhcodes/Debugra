@@ -9,11 +9,11 @@ class MemoryProfilerService {
 
     // Configurable Settings
     this.settings = {
-      sampleIntervalMs: 15000,          // 15 seconds default
-      heapLimitPercentage: 80,          // Alert if heapUsed > 80% of V8 limit
-      consecutiveClimbLimit: 5,         // Alert if heapUsed increases 5 times in a row
-      maxSnapshots: 100,                // History retention limit
-      maxWarnings: 50                   // Warning stamp retention limit
+      sampleIntervalMs: 15000, // 15 seconds default
+      heapLimitPercentage: 80, // Alert if heapUsed > 80% of V8 limit
+      consecutiveClimbLimit: 5, // Alert if heapUsed increases 5 times in a row
+      maxSnapshots: 100, // History retention limit
+      maxWarnings: 50, // Warning stamp retention limit
     };
 
     // Keep track of how many consecutive times the memory has climbed
@@ -34,7 +34,7 @@ class MemoryProfilerService {
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
-    
+
     // Take immediate initial snapshot
     this.takeSnapshot();
 
@@ -42,7 +42,9 @@ class MemoryProfilerService {
       this.takeSnapshot();
     }, this.settings.sampleIntervalMs);
 
-    console.log(`[MemoryProfiler] Monitoring initialized with ${this.settings.sampleIntervalMs}ms intervals.`);
+    console.log(
+      `[MemoryProfiler] Monitoring initialized with ${this.settings.sampleIntervalMs}ms intervals.`
+    );
   }
 
   /**
@@ -61,14 +63,16 @@ class MemoryProfilerService {
    */
   recordRoomConnection() {
     this.connectionCount++;
-    console.log(`[MemoryProfiler] Room connection recorded. Total connections: ${this.connectionCount}`);
-    this.takeSnapshot("room_connection");
+    console.log(
+      `[MemoryProfiler] Room connection recorded. Total connections: ${this.connectionCount}`
+    );
+    this.takeSnapshot('room_connection');
   }
 
   /**
    * Captures memory statistics and processes alarms/leaks.
    */
-  takeSnapshot(trigger = "interval") {
+  takeSnapshot(trigger = 'interval') {
     const memory = process.memoryUsage();
     const heapStats = v8.getHeapStatistics();
     const heapLimit = heapStats.heap_size_limit;
@@ -82,7 +86,7 @@ class MemoryProfilerService {
       external: this.toMB(memory.external),
       arrayBuffers: this.toMB(memory.arrayBuffers || 0),
       heapLimit: this.toMB(heapLimit),
-      heapUsedPercent: Math.round((memory.heapUsed / heapLimit) * 10000) / 100
+      heapUsedPercent: Math.round((memory.heapUsed / heapLimit) * 10000) / 100,
     };
 
     // Insert snapshot and limit history
@@ -104,7 +108,7 @@ class MemoryProfilerService {
     // 1. Check absolute heap limit percentage
     if (latest.heapUsedPercent >= this.settings.heapLimitPercentage) {
       this.addWarning(
-        "CRITICAL",
+        'CRITICAL',
         `High Heap Allocation: Heap used is at ${latest.heapUsedPercent}% of the V8 threshold limit (${latest.heapUsed}MB / ${latest.heapLimit}MB).`
       );
     }
@@ -121,7 +125,7 @@ class MemoryProfilerService {
 
       if (this.climbCounter >= this.settings.consecutiveClimbLimit) {
         this.addWarning(
-          "WARNING",
+          'WARNING',
           `Suspected Memory Leak: Heap allocation has risen consecutively for ${this.climbCounter} samples. Recent: ${prev.heapUsed}MB -> ${latest.heapUsed}MB.`
         );
       }
@@ -133,7 +137,7 @@ class MemoryProfilerService {
    */
   addWarning(severity, message) {
     const timestamp = new Date().toISOString();
-    
+
     // Prevent spamming identical warnings within 10 seconds
     if (this.warnings.length > 0) {
       const last = this.warnings[this.warnings.length - 1];
@@ -147,7 +151,7 @@ class MemoryProfilerService {
       timestamp,
       severity,
       message,
-      memorySnapshot: this.snapshots[this.snapshots.length - 1] || null
+      memorySnapshot: this.snapshots[this.snapshots.length - 1] || null,
     };
 
     this.warnings.push(warning);
@@ -173,12 +177,12 @@ class MemoryProfilerService {
   triggerGC() {
     if (global && typeof global.gc === 'function') {
       global.gc();
-      this.takeSnapshot("manual_gc");
-      return { success: true, message: "Garbage collection triggered successfully." };
+      this.takeSnapshot('manual_gc');
+      return { success: true, message: 'Garbage collection triggered successfully.' };
     }
     return {
       success: false,
-      message: "Garbage collection not exposed. Run node with '--expose-gc' to enable."
+      message: "Garbage collection not exposed. Run node with '--expose-gc' to enable.",
     };
   }
 
@@ -186,13 +190,14 @@ class MemoryProfilerService {
    * Formulates a comprehensive diagnostic report.
    */
   generateDiagnosticReport() {
-    const latest = this.snapshots[this.snapshots.length - 1] || this.takeSnapshot("diagnostic_query");
-    
-    let status = "HEALTHY";
-    if (this.warnings.some(w => w.severity === "CRITICAL")) {
-      status = "CRITICAL";
+    const latest =
+      this.snapshots[this.snapshots.length - 1] || this.takeSnapshot('diagnostic_query');
+
+    let status = 'HEALTHY';
+    if (this.warnings.some((w) => w.severity === 'CRITICAL')) {
+      status = 'CRITICAL';
     } else if (this.warnings.length > 0 || this.climbCounter >= 3) {
-      status = "WARNING";
+      status = 'WARNING';
     }
 
     return {
@@ -204,16 +209,16 @@ class MemoryProfilerService {
         heapUsed: `${latest.heapUsed} MB`,
         external: `${latest.external} MB`,
         arrayBuffers: `${latest.arrayBuffers} MB`,
-        heapUsedPercent: `${latest.heapUsedPercent}%`
+        heapUsedPercent: `${latest.heapUsedPercent}%`,
       },
       v8Statistics: {
         heapLimit: `${latest.heapLimit} MB`,
         consecutiveClimbs: this.climbCounter,
-        totalRoomConnections: this.connectionCount
+        totalRoomConnections: this.connectionCount,
       },
       settings: this.settings,
       alerts: this.warnings,
-      snapshots: this.snapshots
+      snapshots: this.snapshots,
     };
   }
 }

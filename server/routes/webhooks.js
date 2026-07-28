@@ -18,9 +18,7 @@ function webhookRateLimiter(req, res, next) {
   }
 
   // Prune timestamps outside the window
-  const timestamps = ipRequestLog
-    .get(ip)
-    .filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+  const timestamps = ipRequestLog.get(ip).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
 
   if (timestamps.length >= RATE_LIMIT_MAX) {
     return res.status(429).json({
@@ -110,17 +108,19 @@ function validateWebhookPayload(req, res, next) {
 function sanitizeForMessaging(str) {
   if (typeof str !== 'string') return String(str);
 
-  return str
-    // Neutralise Discord/Slack @mentions and special tokens
-    .replace(/@(everyone|here|channel)/gi, '[@$1]')
-    // Neutralise user/role/channel ID mentions: <@123>, <#123>, <@&123>
-    .replace(/<(@[!&]?|#)\d+>/g, '[mention]')
-    // Neutralise Slack special mentions
-    .replace(/<!(\w+)>/g, '[!$1]')
-    // Strip backtick code block injections that could break embed formatting
-    .replace(/`{3}/g, "'''")
-    // Trim whitespace
-    .trim();
+  return (
+    str
+      // Neutralise Discord/Slack @mentions and special tokens
+      .replace(/@(everyone|here|channel)/gi, '[@$1]')
+      // Neutralise user/role/channel ID mentions: <@123>, <#123>, <@&123>
+      .replace(/<(@[!&]?|#)\d+>/g, '[mention]')
+      // Neutralise Slack special mentions
+      .replace(/<!(\w+)>/g, '[!$1]')
+      // Strip backtick code block injections that could break embed formatting
+      .replace(/`{3}/g, "'''")
+      // Trim whitespace
+      .trim()
+  );
 }
 
 // ── Discord payload builder ──────────────────────────────────────────────────
@@ -246,4 +246,3 @@ router.post(
 );
 
 module.exports = router;
-

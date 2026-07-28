@@ -42,9 +42,7 @@ function AppContent({ user }) {
           {/* Test route to render VideoCall directly for e2e tests */}
           <Route
             path="/voice-test"
-            element={
-              <VideoCall roomId={'__playwright_test'} userName={'Playwright'} audioOnly />
-            }
+            element={<VideoCall roomId={'__playwright_test'} userName={'Playwright'} audioOnly />}
           />
 
           {/* Local-only test route that does not use Firestore/room presence */}
