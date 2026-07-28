@@ -11,9 +11,7 @@ const logFormat = winston.format.combine(
 
 const consoleFormat = winston.format.combine(
   winston.format.colorize(),
-  winston.format.printf(
-    (info) => `${info.timestamp} ${info.level}: ${info.message}`
-  )
+  winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
 );
 
 // Configure daily rotate file transports
@@ -37,10 +35,7 @@ const errorFileRotateTransport = new DailyRotateFile({
 const logger = winston.createLogger({
   level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
   format: logFormat,
-  transports: [
-    fileRotateTransport,
-    errorFileRotateTransport,
-  ],
+  transports: [fileRotateTransport, errorFileRotateTransport],
 });
 
 if (process.env.NODE_ENV !== 'production') {

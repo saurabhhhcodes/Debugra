@@ -165,15 +165,16 @@ debugra/
 
 ## Deployment
 
-| Service | Platform | Config |
-|---------|----------|--------|
-| Frontend | Vercel | `npm run build` → Deploy `dist/` |
-| Backend | Cloud Run | `cd server && docker build` |
-| Firebase | Google Cloud | Auto-managed |
+| Service  | Platform     | Config                           |
+| -------- | ------------ | -------------------------------- |
+| Frontend | Vercel       | `npm run build` → Deploy `dist/` |
+| Backend  | Cloud Run    | `cd server && docker build`      |
+| Firebase | Google Cloud | Auto-managed                     |
 
 ### Environment Variables
 
 **Frontend (.env)**
+
 ```
 VITE_FIREBASE_API_KEY=
 VITE_FIREBASE_AUTH_DOMAIN=
@@ -184,6 +185,7 @@ VITE_API_URL=http://localhost:3001
 ```
 
 **Backend (server/.env)**
+
 ```
 GROQ_API_KEY=
 PORT=3001
