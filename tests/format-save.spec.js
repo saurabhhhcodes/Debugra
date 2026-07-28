@@ -19,7 +19,7 @@ test('format on save', async ({ page, browserName }) => {
     window.__DEBUGRA_EDITOR__?.focus();
   });
   await page.keyboard.press('Control+S');
-  
+
   // Wait for the 'Formatted' toast to appear, ensuring Prettier finishes execution
   await expect(page.getByText('Formatted')).toBeVisible({ timeout: 6000 });
 

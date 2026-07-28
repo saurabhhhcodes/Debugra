@@ -44,7 +44,9 @@ class RoomCleanupService {
       return;
     }
     if (!cron.validate(this.settings.cronExpr)) {
-      logger.error(`[roomCleanup] Invalid ROOM_CLEANUP_CRON "${this.settings.cronExpr}" — scheduler disabled.`);
+      logger.error(
+        `[roomCleanup] Invalid ROOM_CLEANUP_CRON "${this.settings.cronExpr}" — scheduler disabled.`
+      );
       return;
     }
     if (this.task) this.task.stop();
@@ -104,7 +106,15 @@ class RoomCleanupService {
         logger.info(
           `[roomCleanup] [dry-run] ${wouldDelete} stale room(s) older than ${this.settings.staleHours}h.`
         );
-        return { dryRun: true, scanned: wouldDelete, deleted: 0, wouldDelete, sampleIds, errors: 0, durationMs };
+        return {
+          dryRun: true,
+          scanned: wouldDelete,
+          deleted: 0,
+          wouldDelete,
+          sampleIds,
+          errors: 0,
+          durationMs,
+        };
       }
 
       let scanned = 0;

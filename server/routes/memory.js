@@ -28,7 +28,9 @@ router.post('/settings', (req, res, next) => {
 
     if (sampleIntervalMs !== undefined) {
       if (typeof sampleIntervalMs !== 'number' || sampleIntervalMs <= 1000) {
-        return res.status(400).json({ error: 'sampleIntervalMs must be a number greater than 1000' });
+        return res
+          .status(400)
+          .json({ error: 'sampleIntervalMs must be a number greater than 1000' });
       }
       memoryProfiler.settings.sampleIntervalMs = sampleIntervalMs;
       // Restart background polling with new interval
@@ -36,22 +38,30 @@ router.post('/settings', (req, res, next) => {
     }
 
     if (heapLimitPercentage !== undefined) {
-      if (typeof heapLimitPercentage !== 'number' || heapLimitPercentage <= 0 || heapLimitPercentage > 100) {
-        return res.status(400).json({ error: 'heapLimitPercentage must be a number between 1 and 100' });
+      if (
+        typeof heapLimitPercentage !== 'number' ||
+        heapLimitPercentage <= 0 ||
+        heapLimitPercentage > 100
+      ) {
+        return res
+          .status(400)
+          .json({ error: 'heapLimitPercentage must be a number between 1 and 100' });
       }
       memoryProfiler.settings.heapLimitPercentage = heapLimitPercentage;
     }
 
     if (consecutiveClimbLimit !== undefined) {
       if (typeof consecutiveClimbLimit !== 'number' || consecutiveClimbLimit <= 0) {
-        return res.status(400).json({ error: 'consecutiveClimbLimit must be a positive number greater than 0' });
+        return res
+          .status(400)
+          .json({ error: 'consecutiveClimbLimit must be a positive number greater than 0' });
       }
       memoryProfiler.settings.consecutiveClimbLimit = consecutiveClimbLimit;
     }
 
     res.json({
       message: 'Memory profiler configuration updated successfully.',
-      settings: memoryProfiler.settings
+      settings: memoryProfiler.settings,
     });
   } catch (err) {
     next(err);
@@ -65,7 +75,9 @@ router.post('/settings', (req, res, next) => {
 router.post('/clear-alerts', (req, res, next) => {
   try {
     memoryProfiler.clearWarnings();
-    res.json({ message: 'Memory alert logs cleared and leak monitoring counters reset successfully.' });
+    res.json({
+      message: 'Memory alert logs cleared and leak monitoring counters reset successfully.',
+    });
   } catch (err) {
     next(err);
   }

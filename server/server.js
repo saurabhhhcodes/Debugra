@@ -109,10 +109,12 @@ function unique(values) {
 
 // FIX 2: Parse CORS_ORIGINS and CLIENT_URL independently
 // and merge both — not OR — so neither is silently dropped
-const extraOrigins = unique([
-  ...(process.env.CORS_ORIGINS || '').split(','),
-  ...(process.env.CLIENT_URL   || '').split(','),
-].map((o) => o.trim()));
+const extraOrigins = unique(
+  [
+    ...(process.env.CORS_ORIGINS || '').split(','),
+    ...(process.env.CLIENT_URL || '').split(','),
+  ].map((o) => o.trim())
+);
 
 // FIX 3: Merge defaults + extras so production domains
 // are always present regardless of env var configuration
@@ -134,7 +136,12 @@ function buildCspDirectives() {
       'https://cdn.jsdelivr.net',
       'https://cdnjs.cloudflare.com',
     ]),
-    styleSrc: unique(["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://cdn.jsdelivr.net']),
+    styleSrc: unique([
+      "'self'",
+      "'unsafe-inline'",
+      'https://fonts.googleapis.com',
+      'https://cdn.jsdelivr.net',
+    ]),
     imgSrc: ["'self'", 'data:', 'blob:', 'https://*.googleusercontent.com'],
     connectSrc: unique([
       "'self'",
@@ -243,8 +250,8 @@ app.use(
       // Reject missing Origin headers consistently to avoid loosening CORS
       // protections in development mode.
       if (!origin) {
-     return callback(null, true);
-    }
+        return callback(null, true);
+      }
 
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
@@ -257,7 +264,13 @@ app.use(
     },
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Groq-Api-Key', 'x-admin-token', 'x-security-diagnostics-token'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'X-Groq-Api-Key',
+      'x-admin-token',
+      'x-security-diagnostics-token',
+    ],
     optionsSuccessStatus: 204,
   })
 );
